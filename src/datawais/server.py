@@ -220,6 +220,24 @@ def create_app(root: Path, token_roles: dict[str, str], audit_path: Path, public
 MAX_STATE = 32000
 
 
+def load_token_roles(secrets_path: Path, environment=None) -> dict[str, str]:
+    """Environment credentials take precedence; private JSON bootstraps local use."""
+    environment = os.environ if environment is None else environment
+    roles = ("admin", "inspector", "cleaner")
+    supplied = {role:environment.get(f"DATAWAIS_{role.upper()}_TOKEN", "") for role in roles}
+    if any(supplied.values()):
+        if not all(supplied.values()):
+            raise ValueError("Set all three DATAWAIS role-token environment variables together.")
+        tokens = supplied
+    else:
+        tokens = json.loads(secrets_path.read_text(encoding="utf-8"))["tokens"]
+    if set(tokens) != set(roles) or any(not isinstance(t,str) or len(t) < 32 or not t.isascii() for t in tokens.values()):
+        raise ValueError("Provide exactly three ASCII role tokens, each at least 32 characters.")
+    if len(set(tokens.values())) != len(roles):
+        raise ValueError("Role tokens must be distinct.")
+    return {token:role for role,token in tokens.items()}
+
+
 def main():
     parser = argparse.ArgumentParser(description="DataWais MCP server")
     parser.add_argument("--root", type=Path, default=Path("workspace"))
@@ -227,8 +245,7 @@ def main():
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--public-host", default=os.environ.get("DATAWAIS_PUBLIC_HOST"))
     args = parser.parse_args()
-    config = json.loads(args.secrets.read_text(encoding="utf-8"))
-    token_roles = {token: role for role,token in config["tokens"].items()}
+    token_roles = load_token_roles(args.secrets)
     app = create_app(args.root, token_roles, args.secrets.parent/"tool-calls.jsonl", args.public_host)
     uvicorn.run(app, host="127.0.0.1", port=args.port, log_level="warning", access_log=False)
 

@@ -1,6 +1,12 @@
 const path = require('node:path');
+const fs = require('node:fs');
 const root = __dirname;
 const python = process.env.DATAWAIS_PYTHON || path.join(root, '.venv', 'Scripts', 'python.exe');
+const privateTokens = JSON.parse(fs.readFileSync(path.join(root, '.runtime', 'secrets.json'), 'utf8')).tokens;
+const tokenEnvironment = Object.fromEntries(['admin', 'inspector', 'cleaner'].map(role => {
+  const name = `DATAWAIS_${role.toUpperCase()}_TOKEN`;
+  return [name, process.env[name] || privateTokens[role]];
+}));
 const server = {
   name: 'datawais-server', cwd: root,
   script: path.join(root, 'scripts', 'bootstrap.py'), interpreter: python,
@@ -8,7 +14,7 @@ const server = {
   autorestart: true, restart_delay: 2000, max_restarts: 15,
   out_file: path.join(root, '.runtime', 'server.out.log'),
   error_file: path.join(root, '.runtime', 'server.err.log'),
-  env: { PYTHONUNBUFFERED: '1', DATAWAIS_DEPS: process.env.DATAWAIS_DEPS || '', DATAWAIS_PUBLIC_HOST: process.env.DATAWAIS_PUBLIC_HOST || '' }
+  env: { ...tokenEnvironment, PYTHONUNBUFFERED: '1', DATAWAIS_DEPS: process.env.DATAWAIS_DEPS || '', DATAWAIS_PUBLIC_HOST: process.env.DATAWAIS_PUBLIC_HOST || '' }
 };
 const apps = [server];
 if (process.env.DATAWAIS_CLOUDFLARED) apps.push({

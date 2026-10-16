@@ -1,0 +1,75 @@
+{
+  "client": "Codex native MCP tool connection",
+  "checks": [
+    {
+      "check": "current_state",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"path\": \"handoff/PROJECT_STATE.md\", \"sha256\": \"90edae831a3a5193f2d08f3dbdd5d832c5b49e8e3a571e54e5f6174e0cbc91a0\", \"content\": \"# DataWais project state\\nStatus: cleaning and independent verification complete\\nCompleted by: fresh real agent session agent-2-cleaning, cleaner role, 2026-10-16\\nInspection: agent-1-inspection; handoff/INSPECTION_REPORT.md\\nFinal report: handoff/CLEANING_REPORT.md\\n\\nDataset: datasets/raw/university_questions.csv\\nRules: rules/questions.json\\nOperator-supplied policy: rules/cleaning_policy.json\\nInput SHA-256:\\n- Dataset: 9494e4d2774094d4f3480c958a308487ed62e2ba941b5dff1cd9629248febef7\\n- Rules: a58646beb073ac6d0bd3743fa740bcf894106bb5ea21bb91d78065742de76c23\\n- Policy: dca01a45cce70c69cfb602e960d8f41f10c64cb5dada8e46fce8a4655e9c4369\\nAll three were reverified before create_clean_copy. The original source hash was reverified unchanged after cleaning.\\n\\nActual atomic outputs and SHA-256:\\n- datasets/cleaned/pt1-demo-1/cleaned.csv: c26b3020b271c1587967e24499436990cc076d655f669b95cdb65ad98a6191de\\n- datasets/cleaned/pt1-demo-1/excluded.json: 953e0ba616326658e0879a5d3f30b17674e5b45d38f543bf0042cca262812642\\n- datasets/cleaned/pt1-demo-1/report.json: 70717415dcf0808f275a2288ba8d44dcaced7d5ce76928c51a45a7a3b20cf8ad\\nFinal-report SHA-256: 353d3903a0f77742a89175d75ca7002478947510b42d63a92c646fa3a5a85b1c\\n\\nResult: 8 source records -> 6 retained, 2 excluded; 1 mapped label and 1 trimmed cell. Record 3 excluded as duplicate; record 5 excluded for missing question, with originals and reasons preserved. Independently validated: valid=true, 0 invalid records, 0 duplicates, 0 missing values. Quoted comma and embedded newline preserved.\\nNext action: none for the supplied cleaning task. Use the saved reports and outputs for review; do not rerun into the occupied output folder.\\nSession 2 resumed solely from MCP handoff files and schema discovery. All workspace reads/writes used the real MCP client. Updates to existing handoff records use fresh SHA-256 guards.\\nAudit transcripts outside MCP workspace: project-root evidence/agent-1-transcript.jsonl and evidence/agent-2-transcript.jsonl.\\nDeployment update after session 2: the user authorized Cloudflare publication, and the authenticated tunnel is now running under pm2. Codex is connected directly to DataWais. The current public address is maintained in the operator's private .runtime/public-url.txt. PT1 audit: repository upload/link and the assessed five-minute live presentation remain; the recorded two-session task is complete.\", \"characters\": 2383, \"next_offset\": null}"
+          }
+        ],
+        "structuredContent": {
+          "path": "handoff/PROJECT_STATE.md",
+          "sha256": "90edae831a3a5193f2d08f3dbdd5d832c5b49e8e3a571e54e5f6174e0cbc91a0",
+          "content": "# DataWais project state\nStatus: cleaning and independent verification complete\nCompleted by: fresh real agent session agent-2-cleaning, cleaner role, 2026-10-16\nInspection: agent-1-inspection; handoff/INSPECTION_REPORT.md\nFinal report: handoff/CLEANING_REPORT.md\n\nDataset: datasets/raw/university_questions.csv\nRules: rules/questions.json\nOperator-supplied policy: rules/cleaning_policy.json\nInput SHA-256:\n- Dataset: 9494e4d2774094d4f3480c958a308487ed62e2ba941b5dff1cd9629248febef7\n- Rules: a58646beb073ac6d0bd3743fa740bcf894106bb5ea21bb91d78065742de76c23\n- Policy: dca01a45cce70c69cfb602e960d8f41f10c64cb5dada8e46fce8a4655e9c4369\nAll three were reverified before create_clean_copy. The original source hash was reverified unchanged after cleaning.\n\nActual atomic outputs and SHA-256:\n- datasets/cleaned/pt1-demo-1/cleaned.csv: c26b3020b271c1587967e24499436990cc076d655f669b95cdb65ad98a6191de\n- datasets/cleaned/pt1-demo-1/excluded.json: 953e0ba616326658e0879a5d3f30b17674e5b45d38f543bf0042cca262812642\n- datasets/cleaned/pt1-demo-1/report.json: 70717415dcf0808f275a2288ba8d44dcaced7d5ce76928c51a45a7a3b20cf8ad\nFinal-report SHA-256: 353d3903a0f77742a89175d75ca7002478947510b42d63a92c646fa3a5a85b1c\n\nResult: 8 source records -> 6 retained, 2 excluded; 1 mapped label and 1 trimmed cell. Record 3 excluded as duplicate; record 5 excluded for missing question, with originals and reasons preserved. Independently validated: valid=true, 0 invalid records, 0 duplicates, 0 missing values. Quoted comma and embedded newline preserved.\nNext action: none for the supplied cleaning task. Use the saved reports and outputs for review; do not rerun into the occupied output folder.\nSession 2 resumed solely from MCP handoff files and schema discovery. All workspace reads/writes used the real MCP client. Updates to existing handoff records use fresh SHA-256 guards.\nAudit transcripts outside MCP workspace: project-root evidence/agent-1-transcript.jsonl and evidence/agent-2-transcript.jsonl.\nDeployment update after session 2: the user authorized Cloudflare publication, and the authenticated tunnel is now running under pm2. Codex is connected directly to DataWais. The current public address is maintained in the operator's private .runtime/public-url.txt. PT1 audit: repository upload/link and the assessed five-minute live presentation remain; the recorded two-session task is complete.",
+          "characters": 2383,
+          "next_offset": null
+        },
+        "isError": false
+      }
+    },
+    {
+      "check": "cleaned_validation",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"dataset_sha256\": \"c26b3020b271c1587967e24499436990cc076d655f669b95cdb65ad98a6191de\", \"rules_sha256\": \"a58646beb073ac6d0bd3743fa740bcf894106bb5ea21bb91d78065742de76c23\", \"valid\": true, \"records\": 6, \"invalid_records\": 0, \"issue_counts\": {}, \"issues\": [], \"issues_truncated\": false, \"duplicate_records\": 0, \"duplicate_examples\": [], \"duplicate_examples_truncated\": false}"
+          }
+        ],
+        "structuredContent": {
+          "dataset_sha256": "c26b3020b271c1587967e24499436990cc076d655f669b95cdb65ad98a6191de",
+          "rules_sha256": "a58646beb073ac6d0bd3743fa740bcf894106bb5ea21bb91d78065742de76c23",
+          "valid": true,
+          "records": 6,
+          "invalid_records": 0,
+          "issue_counts": {},
+          "issues": [],
+          "issues_truncated": false,
+          "duplicate_records": 0,
+          "duplicate_examples": [],
+          "duplicate_examples_truncated": false
+        },
+        "isError": false
+      }
+    },
+    {
+      "check": "raw_preservation",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"path\": \"datasets/raw/university_questions.csv\", \"sha256\": \"9494e4d2774094d4f3480c958a308487ed62e2ba941b5dff1cd9629248febef7\", \"records\": 8, \"columns\": [\"question\", \"label\"], \"missing_values\": {\"question\": 1, \"label\": 0}, \"sample\": []}"
+          }
+        ],
+        "structuredContent": {
+          "path": "datasets/raw/university_questions.csv",
+          "sha256": "9494e4d2774094d4f3480c958a308487ed62e2ba941b5dff1cd9629248febef7",
+          "records": 8,
+          "columns": [
+            "question",
+            "label"
+          ],
+          "missing_values": {
+            "question": 1,
+            "label": 0
+          },
+          "sample": []
+        },
+        "isError": false
+      }
+    }
+  ]
+}

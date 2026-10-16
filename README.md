@@ -35,6 +35,11 @@ The initializer generates three random tokens in `.runtime/secrets.json`. Never
 commit that file. The initializer refuses to overwrite an existing workspace.
 Use a different `--root` for another untouched fixture set.
 
+Under pm2, credentials are supplied to the server through `DATAWAIS_ADMIN_TOKEN`,
+`DATAWAIS_INSPECTOR_TOKEN`, and `DATAWAIS_CLEANER_TOKEN`. All three must be set
+together when overriding them. The private JSON file provisions local credentials
+and remains a fallback for direct development runs; no token is in source code.
+
 The build in this chat used the bundled Python 3.12 runtime and dependencies in
 the chat's `work/` folder because environment restrictions prevented normal venv
 bootstrapping. `scripts/bootstrap.py` supports this using `DATAWAIS_DEPS`. Normal

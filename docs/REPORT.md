@@ -14,7 +14,10 @@ reproducible. This project deliberately uses the v1 SDK API; follow the v1 docs
 when maintaining it. Typed input models reject unknown properties and invalid
 types. The standard CSV parser handles quoted delimiters and embedded newlines.
 Streamable HTTP supports a standalone endpoint. Uvicorn serves locally, pm2
-manages the process and a configured HTTPS tunnel can expose it after approval.
+manages the process and the configured HTTPS tunnel exposes the authenticated
+endpoint. The managed server receives its three role tokens through environment
+variables. An ignored private JSON file provisions the local tokens and supports
+direct development runs; credentials are never embedded in source or shared ZIPs.
 
 ## Tool design
 
@@ -57,10 +60,10 @@ authentication. Dataset text must never be interpreted as instructions.
 
 Public deployment was completed after user authorization. A managed tunnel
 wrapper synchronizes the exact host allowlist and private client configurations
-when Cloudflare assigns a new URL. The router's default DNS returned NXDOMAIN
-for the new hostname; public verification used Cloudflare's independently
-resolved IP while preserving TLS hostname verification. Codex uses the stable
-local endpoint with a private credential helper, avoiding that router issue.
+when Cloudflare assigns a new URL. An initial router DNS-cache issue has resolved;
+all public checks now pass using normal DNS with TLS verification. Codex uses
+the stable local endpoint with a private credential helper; native MCP calls
+from this chat have also succeeded.
 No model accuracy improvements are claimed from validation alone.
 
 ## Verification and evidence
@@ -71,4 +74,5 @@ multiline values, duplicate survivors and numeric validation. Live MCP checks
 cover authentication, origin checks, scoped tools, schemas, error results,
 resources, prompts and core writing operations.
 
-See `evidence/STATUS.md` for actual run results and the remaining deployment step.
+See `evidence/STATUS.md` for actual run results and `docs/PT1-CHECKLIST.md` for
+submission and live-presentation steps that remain.

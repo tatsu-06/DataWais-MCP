@@ -21,6 +21,6 @@
     "cleaner: traversal, oversized read and raw write rejected",
     "cleaner: resource and prompt available"
   ],
-  "dns_override": "104.16.231.132",
+  "dns_override": null,
   "tls_hostname_verification": true
 }
