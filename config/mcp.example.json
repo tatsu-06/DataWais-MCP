@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "datawais-inspector": {
+      "url": "http://127.0.0.1:8765/mcp",
+      "headers": {"Authorization": "Bearer REPLACE_LOCALLY_WITH_INSPECTOR_TOKEN"}
+    },
+    "datawais-cleaner": {
+      "url": "http://127.0.0.1:8765/mcp",
+      "headers": {"Authorization": "Bearer REPLACE_LOCALLY_WITH_CLEANER_TOKEN"}
+    }
+  }
+}

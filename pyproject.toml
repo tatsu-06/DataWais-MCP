@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datawais-mcp"
+version = "1.0.0"
+description = "Sandboxed MCP file server and deterministic CSV quality tools"
+requires-python = ">=3.11"
+dependencies = ["mcp==1.30.0", "uvicorn>=0.31,<1"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+datawais = "datawais.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
