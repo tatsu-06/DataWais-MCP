@@ -13,6 +13,8 @@ project = Path(__file__).resolve().parents[1]
 if args.root.exists() and any(args.root.iterdir()):
     raise SystemExit("Workspace is not empty. Choose a new --root; initialization never overwrites.")
 shutil.copytree(project/"fixtures", args.root, dirs_exist_ok=True)
+for folder in ["datasets/cleaned", "reports", "notes"]:
+    (args.root/folder).mkdir(parents=True, exist_ok=True)
 args.runtime.mkdir(parents=True, exist_ok=True)
 config = args.runtime/"secrets.json"
 if not config.exists():

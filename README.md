@@ -37,6 +37,11 @@ the chat's `work/` folder because environment restrictions prevented normal venv
 bootstrapping. `scripts/bootstrap.py` supports this using `DATAWAIS_DEPS`. Normal
 installations can run the package directly without that variable.
 
+On the original computer, `scripts/Run-Here.ps1` restarts the already configured
+local installation. Private runtime settings stay outside the source archive.
+For exact tested dependency versions, install `requirements-lock.txt` before
+installing this package with `--no-deps`.
+
 ## Test the running connector
 
 From a second terminal:

@@ -172,6 +172,8 @@ def create_app(root: Path, token_roles: dict[str, str], audit_path: Path, public
             headers = dict(scope["headers"])
             auth = headers.get(b"authorization", b"").decode("latin1")
             supplied = auth[7:] if auth.startswith("Bearer ") else ""
+            if not supplied.isascii():
+                supplied = ""
             role = next((r for token,r in token_roles.items() if secrets.compare_digest(token, supplied)), None)
             if role is None:
                 return await JSONResponse({"error": "unauthorized"}, status_code=401, headers={"WWW-Authenticate": "Bearer"})(scope, receive, send)

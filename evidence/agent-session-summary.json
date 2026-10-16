@@ -1,0 +1,33 @@
+[
+  {
+    "session": "agent-1-inspection",
+    "role": "inspector",
+    "protocol_exchanges": 21,
+    "tool_calls": 20,
+    "tool_errors": 0,
+    "tools": {
+      "read_file": 8,
+      "inspect_dataset": 2,
+      "find_duplicates": 1,
+      "validate_dataset": 1,
+      "list_files": 2,
+      "write_file": 6
+    }
+  },
+  {
+    "session": "agent-2-cleaning",
+    "role": "cleaner",
+    "protocol_exchanges": 29,
+    "tool_calls": 28,
+    "tool_errors": 1,
+    "tools": {
+      "read_file": 14,
+      "list_files": 3,
+      "inspect_dataset": 3,
+      "create_clean_copy": 1,
+      "validate_dataset": 1,
+      "find_duplicates": 1,
+      "write_file": 5
+    }
+  }
+]

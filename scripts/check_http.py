@@ -17,7 +17,7 @@ async def main():
     tokens = json.loads(Path(".runtime/secrets.json").read_text())["tokens"]
     checks = []
     async with httpx.AsyncClient(timeout=30) as client:
-        for headers, label in [({}, "missing token rejected"), ({"Authorization":"Bearer invalid"}, "invalid token rejected")]:
+        for headers, label in [({}, "missing token rejected"), ({"Authorization":"Bearer invalid"}, "invalid token rejected"), ({b"Authorization":b"Bearer \xff"}, "non-ASCII token rejected")]:
             response = await client.post(args.url, headers=headers, json={})
             assert response.status_code == 401
             checks.append(label)

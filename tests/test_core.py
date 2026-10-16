@@ -138,6 +138,16 @@ def test_invalid_rules_and_unknown_cleaning_actions_fail(ws):
         ws.rules("rules/invalid.json")
 
 
+def test_agent_cannot_substitute_editable_validation_rules(ws):
+    ws.write("reports/fake-rules.json", "{}", "inspector")
+    with pytest.raises(GuardError, match="operator-controlled"):
+        ws.validate("datasets/raw/university_questions.csv", "reports/fake-rules.json")
+    ws.write("reports/fake-policy.json", "{}", "cleaner")
+    req = request(ws).model_copy(update={"policy_path":"reports/fake-policy.json", "expected_policy_sha256":digest(ws.read_bytes("reports/fake-policy.json"))})
+    with pytest.raises(GuardError, match="operator-controlled"):
+        ws.clean(req)
+
+
 def test_invalid_then_valid_duplicate_survivor(ws):
     (ws.root/"datasets/raw/keys.csv").write_text("id,label\n1,wrong\n1,valid\n")
     (ws.root/"rules/keys.json").write_text(json.dumps({"required_values":["id","label"],"allowed_labels":{"label":["valid"]},"duplicate_keys":["id"]}))

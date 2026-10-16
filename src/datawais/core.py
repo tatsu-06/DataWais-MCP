@@ -18,7 +18,7 @@ import threading
 import uuid
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field
 
 MAX_BYTES = 5 * 1024 * 1024
 MAX_ROWS = 10_000
@@ -260,10 +260,17 @@ class Workspace:
         return headers, rows, digest(data)
 
     def rules(self, path: str) -> Rules:
+        self.operator_rule_file(path)
         try:
             return Rules.model_validate_json(self.text(path))
         except (ValueError, TypeError) as e:
             raise GuardError("Invalid rules JSON. Use required_columns, required_values, types, allowed_labels, and duplicate_keys only.") from None
+
+    def operator_rule_file(self, value: str) -> Path:
+        p = self.path(value)
+        if p.relative_to(self.root).parts[0] != "rules" or p.suffix.lower() != ".json":
+            raise GuardError("Validation rules and cleaning policies must come from operator-controlled rules/*.json files.")
+        return p
 
     @staticmethod
     def check_columns(headers: list[str], names: list[str]) -> None:
@@ -353,6 +360,7 @@ class Workspace:
                 if digest(self.read_bytes(path)) != expected:
                     raise GuardError("Rules or policy version conflict. Read the current files again.")
             rules = self.rules(req.rules_path)
+            self.operator_rule_file(req.policy_path)
             try:
                 policy = Cleaning.model_validate_json(self.text(req.policy_path))
             except ValueError:

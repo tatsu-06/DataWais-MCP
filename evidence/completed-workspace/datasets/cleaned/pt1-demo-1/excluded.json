@@ -1,0 +1,18 @@
+[
+  {
+    "record": 3,
+    "reason": "duplicate",
+    "original": {
+      "question": "How do I enroll?",
+      "label": "enrollment"
+    }
+  },
+  {
+    "record": 5,
+    "reason": "validation:question:missing_value",
+    "original": {
+      "question": "",
+      "label": "schedule"
+    }
+  }
+]

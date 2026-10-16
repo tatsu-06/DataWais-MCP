@@ -1,0 +1,7 @@
+{
+  "required_columns": ["question", "label"],
+  "required_values": ["question", "label"],
+  "types": {"question": "string", "label": "string"},
+  "allowed_labels": {"label": ["enrollment", "schedule", "payment"]},
+  "duplicate_keys": ["question", "label"]
+}
