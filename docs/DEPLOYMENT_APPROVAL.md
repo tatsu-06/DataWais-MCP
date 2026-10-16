@@ -1,5 +1,10 @@
 # Prepared HTTPS deployment
 
+**Completed:** the user authorized finishing setup after the specific deployment
+request. Cloudflare publication and public MCP verification have now completed.
+This file retains the reviewed exposure description; current results are in
+`evidence/STATUS.md`.
+
 The local connector and process manager are already working. The remaining
 deployment action is to start the downloaded Cloudflare Tunnel executable under
 the same isolated pm2 instance and point it at `http://127.0.0.1:8765`.

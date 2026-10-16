@@ -1,0 +1,26 @@
+{
+  "url": "https://separated-northeast-lanka-acids.trycloudflare.com/mcp",
+  "passed": 18,
+  "checks": [
+    "missing token rejected",
+    "invalid token rejected",
+    "non-ASCII token rejected",
+    "untrusted Origin rejected",
+    "admin: correct 10-tool scope",
+    "admin: strict schemas reject extra arguments",
+    "admin: traversal, oversized read and raw write rejected",
+    "write, exact replacement and gated delete work over MCP",
+    "admin: resource and prompt available",
+    "inspector: correct 7-tool scope",
+    "inspector: strict schemas reject extra arguments",
+    "inspector: traversal, oversized read and raw write rejected",
+    "inspector cannot call cleaner tool by guessing its name",
+    "inspector: resource and prompt available",
+    "cleaner: correct 9-tool scope",
+    "cleaner: strict schemas reject extra arguments",
+    "cleaner: traversal, oversized read and raw write rejected",
+    "cleaner: resource and prompt available"
+  ],
+  "dns_override": "104.16.231.132",
+  "tls_hostname_verification": true
+}

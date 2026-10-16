@@ -1,0 +1,22 @@
+{
+  "configured": true,
+  "url": "http://127.0.0.1:8765/mcp",
+  "authentication": "private local header helper",
+  "server": "DataWais MCP (cleaner)",
+  "tools": [
+    "list_files",
+    "read_file",
+    "search_files",
+    "inspect_dataset",
+    "validate_dataset",
+    "find_duplicates",
+    "write_file",
+    "str_replace",
+    "create_clean_copy"
+  ],
+  "credentials_in_config": false,
+  "existing_connections": [
+    "Roblox_Studio",
+    "node_repl"
+  ]
+}

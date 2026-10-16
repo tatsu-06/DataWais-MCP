@@ -2,6 +2,9 @@
 
 **A working MCP file-server connector with CSV quality tools and persistent AI handoff.**
 
+**On the original computer, read [START-HERE.md](START-HERE.md): setup, HTTPS,
+Codex registration and sign-in startup have been completed.**
+
 DataWais exposes a sandboxed project folder through MCP Streamable HTTP. AI agents
 can inspect CSV data, validate declared rules, identify duplicates, and create
 cleaned copies. The original data and operator-supplied rules are read-only to
@@ -173,8 +176,9 @@ server's exact allowed hostname and restarts it. Authentication remains required
 Quick tunnels are temporary and can change URL when restarted. A stable
 presentation deployment should use an operator-owned named tunnel or static
 domain. Keep the host awake; pm2 restarts processes, not a powered-off computer.
-On Windows pm2 reboot startup must be configured separately; it is not installed
-as a Windows service by these scripts.
+On the original computer a limited-privilege sign-in task starts the launcher.
+On another Windows computer run `scripts/Install-Autostart.ps1` after configuring
+the runtime. This is a user sign-in task, not a system service.
 
 ```powershell
 $env:PM2_HOME = Join-Path $PWD '.runtime\pm2'
@@ -183,10 +187,10 @@ pm2 logs datawais-server --lines 20
 .\scripts\Stop-DataWais.ps1
 ```
 
-The original chat's attempt to publish through Cloudflare was blocked by automatic
-approval review pending explicit user consent to that destination. See the
-current `evidence/STATUS.md` for the verified state; this README does not claim
-that a public deployment was completed.
+The user authorized Cloudflare deployment and the public endpoint passed the
+protocol checks. See `evidence/STATUS.md` for its current address and the local
+router DNS limitation. The managed tunnel wrapper refreshes private connection
+files and the server's exact host allowlist if Cloudflare assigns another URL.
 
 ## Security boundaries
 
@@ -208,6 +212,7 @@ handling remains part of the security boundary.
 ## References
 
 - [Official MCP Python SDK, v1 API](https://py.sdk.modelcontextprotocol.io/v1/)
+- [Official OpenAI MCP configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference)
 - [MCP filesystem reference server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem)
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector)
 - [Cloudflare quick tunnels](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)

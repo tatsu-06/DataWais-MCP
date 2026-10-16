@@ -55,9 +55,13 @@ Role tokens are suitable for this prototype; OAuth, per-user revocation and
 rate limiting are future improvements. The public endpoint needs HTTPS and
 authentication. Dataset text must never be interpreted as instructions.
 
-The report does not claim public deployment or model accuracy improvements
-without corresponding evidence. Publication through Cloudflare requires the
-specific approval requested by automatic review in this chat.
+Public deployment was completed after user authorization. A managed tunnel
+wrapper synchronizes the exact host allowlist and private client configurations
+when Cloudflare assigns a new URL. The router's default DNS returned NXDOMAIN
+for the new hostname; public verification used Cloudflare's independently
+resolved IP while preserving TLS hostname verification. Codex uses the stable
+local endpoint with a private credential helper, avoiding that router issue.
+No model accuracy improvements are claimed from validation alone.
 
 ## Verification and evidence
 

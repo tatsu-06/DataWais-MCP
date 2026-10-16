@@ -3,6 +3,9 @@ import argparse
 import asyncio
 import json
 from pathlib import Path
+import ipaddress
+import socket
+from urllib.parse import urlsplit
 
 import httpx
 from mcp import ClientSession
@@ -13,7 +16,16 @@ async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default="http://127.0.0.1:8765/mcp")
     parser.add_argument("--output", type=Path, default=Path("evidence/http-checks.json"))
+    parser.add_argument("--resolved-ip", help="Optional independently verified DNS answer for this URL only; TLS still verifies the original hostname.")
     args = parser.parse_args()
+    if args.resolved_ip:
+        ipaddress.ip_address(args.resolved_ip)
+        target = urlsplit(args.url).hostname
+        original_resolver = socket.getaddrinfo
+        def resolve_target(host,port,*positional,**keywords):
+            name = host.decode("ascii") if isinstance(host,bytes) else host
+            return original_resolver(args.resolved_ip if name == target else host,port,*positional,**keywords)
+        socket.getaddrinfo = resolve_target
     tokens = json.loads(Path(".runtime/secrets.json").read_text())["tokens"]
     checks = []
     async with httpx.AsyncClient(timeout=30) as client:
@@ -66,7 +78,7 @@ async def main():
                     assert prompts.prompts[0].name == "continue_dataset_task"
                     checks.append(f"{role}: resource and prompt available")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps({"url":args.url,"passed":len(checks),"checks":checks},indent=2))
+    args.output.write_text(json.dumps({"url":args.url,"passed":len(checks),"checks":checks,"dns_override":args.resolved_ip,"tls_hostname_verification":True},indent=2))
     print(f"PASS: {len(checks)} protocol/security checks; saved {args.output}")
 
 
