@@ -8,7 +8,7 @@ echo.
 if "%DATAWAIS_START_EXIT%"=="0" (
   echo DataWais is running in the background.
   echo Closing this window will NOT stop the server.
-  echo Open DOCUMENTATION.cmd when you are ready to take screenshots.
+  echo Open DOCUMENTATION.cmd to view server diagnostics.
 ) else (
   echo DataWais did not finish starting.
   echo Read the error above. A startup log is saved in .runtime\last-startup.log.

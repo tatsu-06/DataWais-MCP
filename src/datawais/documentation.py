@@ -1,4 +1,4 @@
-"""Screenshot-friendly views of real MCP responses and clearly labeled saved evidence.
+"""Terminal diagnostics from real MCP responses and clearly labeled saved evidence.
 
 These views do not perform cleaning or replace a real two-session agent run.
 Credentials are loaded locally and never printed.
@@ -143,14 +143,14 @@ async def show(section):
 
 def main():
     sections=['tools','before','handoff','after','security','deployment','sessions']
-    parser=argparse.ArgumentParser(description='Show real DataWais results for documentation screenshots')
+    parser=argparse.ArgumentParser(description='DataWais MCP diagnostics')
     parser.add_argument('--section',choices=sections+['all','tests'])
     args=parser.parse_args()
     os.chdir(ROOT)
     while True:
         chosen=args.section
         if not chosen:
-            print('\nDATAWAIS DOCUMENTATION SCREENSHOTS\n')
+            print('\nDATAWAIS MCP DIAGNOSTICS\n')
             for n,name in enumerate(sections,1):print(f'  {n}. {name}')
             print('  8. Run automated tests\n  0. Exit')
             answer=input('\nChoose a view: ').strip()
@@ -169,10 +169,10 @@ def main():
                 for section in sections if chosen=='all' else [chosen]:asyncio.run(show(section))
         except Exception as exc:
             print('\nCHECK DID NOT COMPLETE:',type(exc).__name__)
-            print('Start DataWais with START-DATAWAIS.cmd, then retry. Do not describe this as a passed check.')
+            print('Start DataWais with START-DATAWAIS.cmd, then retry.')
             if args.section:raise SystemExit(1)
         if args.section:return
-        input('\nTake your screenshot with Win + Shift + S. Press Enter for the menu.')
+        input('\nPress Enter to return to the menu.')
 
 
 if __name__=='__main__':main()
