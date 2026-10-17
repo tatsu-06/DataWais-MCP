@@ -5,8 +5,9 @@
 Repository: https://github.com/tatsu-06/DataWais-MCP
 
 Screenshot documentation from the 17 October two-session demonstration:
-[Upload-ready PDF](docs/DataWais-PT1-Documentation.pdf) and
-[editable report](docs/DataWais-PT1-Documentation.md).
+[Upload-ready PDF](docs/DataWais-PT1-Documentation.pdf),
+[editable Word document](docs/DataWais-PT1-Documentation.docx), and
+[Markdown report](docs/DataWais-PT1-Documentation.md).
 The [screenshot originals](docs/screenshots/2026-10-17) and
 [fresh session evidence](evidence/2026-10-17-user-demo) are included.
 The earlier technical report remains available as

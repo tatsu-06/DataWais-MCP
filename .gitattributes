@@ -4,3 +4,4 @@
 *.pdf binary
 *.png binary
 evidence/2026-10-17-user-demo/workspace/** -text
+*.docx binary
