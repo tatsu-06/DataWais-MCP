@@ -34,5 +34,7 @@ This file records actual verification, not intended features.
   zero duplicates. Raw data SHA-256 is unchanged.
 - Read DEMONSTRATION.md, the full JSONL transcripts and completed-workspace/ for
   the reproducible evidence. HTTP checks are clearly labeled as scripted tests.
-- Submission remains incomplete until a hosted repository link is supplied and
-  the team performs its assessed five-minute presentation. See docs/PT1-CHECKLIST.md.
+- Hosted repository: https://github.com/tatsu-06/DataWais-MCP (private pending
+  explicit public-visibility approval). Instructor access must be enabled.
+- A seven-page upload report is included at docs/DataWais-PT1-Submission.pdf.
+  The team still needs to perform its assessed five-minute presentation.

@@ -52,7 +52,9 @@ protocol/security checks now pass through normal DNS with no override. Codex's
 local connection and native tools are also verified. No network settings were
 changed. See `evidence/public-http-checks.json` for the latest result.
 
-The repository is local; it has not been uploaded to a Git hosting account.
-The source ZIP includes `repository-history.bundle` to preserve its Git history.
-See `docs/PT1-CHECKLIST.md` for the requirement audit: the hosted repository link
-and the team's assessed live presentation remain.
+The repository is hosted at https://github.com/tatsu-06/DataWais-MCP and is
+currently private pending approval to expose its contents publicly. Enable
+instructor access before submitting the repository link.
+Upload docs/DataWais-PT1-Submission.pdf as the single document required by the
+submission form. The source ZIP includes a portable Git history bundle.
+See docs/PT1-CHECKLIST.md for the complete audit and presentation requirements.

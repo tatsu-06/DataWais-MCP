@@ -24,7 +24,7 @@ are synthetic demonstration data.
 | Deliverable | Status |
 |---|---|
 | Working repository | Complete locally, with Git history and a portable bundle |
-| Repository link | **Not complete: no Git remote or hosted repository URL is configured** |
+| Repository link | Created at https://github.com/tatsu-06/DataWais-MCP; currently private pending public-visibility approval |
 | README | Written, with installation, tools, deployment and security guidance |
 | Tool-call transcript | Complete: agent-1-transcript.jsonl and agent-2-transcript.jsonl |
 | Short report | Complete: docs/REPORT.md |
@@ -62,8 +62,9 @@ are synthetic demonstration data.
 
 ## Remaining actions
 
-1. Publish the local repository to the chosen Git hosting account and submit its
-   link with the README, transcripts, report and handoff evidence.
+1. Enable instructor access to the hosted repository and submit its link.
+   The one-file upload report is docs/DataWais-PT1-Submission.pdf and includes the
+   architecture, security discussion, test results and condensed actual transcript.
 2. Rehearse the actual workflow within five minutes and present it at the
    instructor's checkpoint. Be ready to explain MCP, roles, sandboxing and tradeoffs.
 3. Before presenting, check the current tunnel URL and keep the computer awake
