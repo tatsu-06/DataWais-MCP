@@ -1,123 +1,51 @@
 # DataWais MCP
 
-**A working MCP file-server connector with CSV quality tools and persistent AI handoff.**
+A sandboxed MCP file server for CSV dataset inspection, validation and controlled cleaning.
 
-Repository: https://github.com/tatsu-06/DataWais-MCP
+DataWais exposes file and dataset tools over MCP Streamable HTTP. It preserves raw
+datasets, applies operator-supplied rules and cleaning policies, and saves task
+state so another AI session can continue the work. The server does not call a
+model API itself.
 
-Screenshot documentation from the 17 October two-session demonstration:
-[Upload-ready PDF](docs/DataWais-PT1-Documentation.pdf),
-[editable Word document](docs/DataWais-PT1-Documentation.docx), and
-[Markdown report](docs/DataWais-PT1-Documentation.md).
-The [screenshot originals](docs/screenshots/2026-10-17) and
-[fresh session evidence](evidence/2026-10-17-user-demo) are included.
-The earlier technical report remains available as
-[DataWais PT1 Submission](docs/DataWais-PT1-Submission.pdf).
-The repository is public for instructor access. The report and transcript links
-can be opened without signing in.
+## Install and run on Windows
 
-For your own screenshots, double-click `DOCUMENTATION.cmd` on the configured
-computer and follow [the screenshot guide](docs/SCREENSHOT-GUIDE.md). Its views
-show real MCP results and clearly label saved session evidence.
-
-`START-DATAWAIS.cmd` keeps its window open after startup. A successful start
-prints `STARTUP COMPLETE`; the server continues running after that window closes.
-Startup failures remain visible and are saved in the ignored private file
-`.runtime/last-startup.log`. Downloaded source copies need README setup before use.
-
-**On the original computer, read [START-HERE.md](START-HERE.md): setup, HTTPS,
-Codex registration and sign-in startup have been completed.**
-
-DataWais exposes a sandboxed project folder through MCP Streamable HTTP. AI agents
-can inspect CSV data, validate declared rules, identify duplicates, and create
-cleaned copies. The original data and operator-supplied rules are read-only to
-every agent role. No model API is called inside the server.
-
-## What's included
-
-- Ten working tools, strict input schemas, structured results and `isError` errors.
-- Three token-scoped roles: inspector (7 tools), cleaner (9), admin (10).
-- A project-state resource and a reusable continuation prompt.
-- A real MCP SDK client, live protocol checks and security/CSV tests.
-- pm2 supervision, HTTPS tunnel configuration, example data and handoff templates.
-- Demo prompts, technical report and evidence from the actual runs.
-
-## Install on Windows
-
-Install Python 3.11+ (3.12 recommended), Node.js and Git first. In this directory:
+Install Python 3.11 or later and Node.js for optional process management.
+From the project directory, run:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e '.[test]'
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+.\.venv\Scripts\python.exe -m pip install --no-deps -e .
 .\.venv\Scripts\python.exe scripts\init_demo.py
 .\.venv\Scripts\python.exe -m datawais.server
 ```
 
-The server binds to `127.0.0.1:8765`; MCP is at `/mcp`. A token is required.
-The initializer generates three random tokens in `.runtime/secrets.json`. Never
-commit that file. The initializer refuses to overwrite an existing workspace.
-Use a different `--root` for another untouched fixture set.
+The initializer creates a sample `workspace/` and private credentials in
+`.runtime/secrets.json`. It refuses to overwrite an existing workspace.
+Both folders are excluded from Git.
 
-Under pm2, credentials are supplied to the server through `DATAWAIS_ADMIN_TOKEN`,
-`DATAWAIS_INSPECTOR_TOKEN`, and `DATAWAIS_CLEANER_TOKEN`. All three must be set
-together when overriding them. The private JSON file provisions local credentials
-and remains a fallback for direct development runs; no token is in source code.
+The MCP endpoint is `http://127.0.0.1:8765/mcp`. A bearer token is required.
+The health endpoint is `http://127.0.0.1:8765/healthz`.
 
-The build in this chat used the bundled Python 3.12 runtime and dependencies in
-the chat's `work/` folder because environment restrictions prevented normal venv
-bootstrapping. `scripts/bootstrap.py` supports this using `DATAWAIS_DEPS`. Normal
-installations can run the package directly without that variable.
+On an already configured installation, use `START-DATAWAIS.cmd` and
+`STOP-DATAWAIS.cmd`. A downloaded source copy needs the installation steps first.
 
-On the original computer, `scripts/Run-Here.ps1` restarts the already configured
-local installation. Private runtime settings stay outside the source archive.
-For exact tested dependency versions, install `requirements-lock.txt` before
-installing this package with `--no-deps`.
+## Connect an MCP client
 
-## Test the running connector
+Configure a client that supports Streamable HTTP and an Authorization header:
 
-From a second terminal:
+- URL: `http://127.0.0.1:8765/mcp`, or the deployed HTTPS endpoint.
+- Header: `Authorization: Bearer <token for the chosen role>`.
+- Example configuration: `config/mcp.example.json`.
+
+Store real credentials locally. Never commit tokens or private client settings.
+The included SDK client can discover tools directly:
 
 ```powershell
-.\.venv\Scripts\python.exe -m datawais.client --role admin list
-.\.venv\Scripts\python.exe scripts\check_http.py
-.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m datawais.client --role cleaner list
 ```
 
-The client performs MCP initialization and real `tools/list` / `tools/call`
-exchanges. It is a connector for the agent operating it, not an LLM agent itself.
-
-To call a tool, create `inspect-args.json` containing:
-
-```json
-{"path":"datasets/raw/university_questions.csv","sample_rows":2}
-```
-
-Then run:
-
-```powershell
-.\.venv\Scripts\python.exe -m datawais.client --role inspector --session inspection --transcript evidence\my-session.jsonl call inspect_dataset --args-file inspect-args.json
-```
-
-Arguments are read from JSON files to avoid shell quoting errors. Transcripts
-contain inputs and results; use synthetic data for the submitted demo. Server
-audit logs omit argument values and tokens.
-
-## Connect an AI host
-
-In a host supporting remote MCP with bearer headers, create an MCP server entry:
-
-- URL: `http://127.0.0.1:8765/mcp`, or the approved public HTTPS URL.
-- Header: `Authorization: Bearer <token for the selected role>`.
-- Use **inspector** for the first agent session and **cleaner** for the second.
-
-Host configuration formats vary. `config/mcp.example.json` illustrates the
-connection fields; substitute credentials locally. The included CLI client works
-without configuring another desktop application. The recorded demo uses AI
-agent sessions selecting real calls through this client.
-
-Do not use the admin token for routine data work. Discovery returns only the
-selected role's tools, and calling an unavailable tool is rejected server-side.
-
-## Tools
+## Tools and permissions
 
 | Tool | Inspector | Cleaner | Admin |
 |---|:---:|:---:|:---:|
@@ -127,120 +55,71 @@ selected role's tools, and calling an unavailable tool is rejected server-side.
 | inspect_dataset | yes | yes | yes |
 | validate_dataset | yes | yes | yes |
 | find_duplicates | yes | yes | yes |
-| write_file | reports/handoff | reports/handoff/notes | reports/handoff/notes |
-| str_replace | — | yes | yes |
-| create_clean_copy | — | yes | yes |
-| delete_file | — | — | generated reports/notes only |
+| write_file | restricted | restricted | restricted |
+| str_replace | no | yes | yes |
+| create_clean_copy | no | yes | yes |
+| delete_file | no | no | restricted |
 
-All paths are relative to the workspace. Generic writing tools accept only
-`.md`, `.txt`, `.json` files in their permitted folders. They cannot edit raw
-datasets, rules or cleaning outputs. Existing-file edits require the current
-SHA-256; deletion also requires `confirm=true`. The cleaner checks current
-dataset, rule and policy hashes and never overwrites an existing output run.
+The server exposes seven inspector tools, nine cleaner tools and ten admin tools.
+Roles are enforced using credentials, rather than instructions in an AI prompt.
 
-## Dataset contract
+## Dataset workflow
 
-- UTF-8 CSV (optional BOM), comma delimiter, unique nonempty headers.
-- Up to 5 MiB, 10,000 records and 100 columns; parser rejects malformed records.
-- Quoted commas and multiline values are supported. Record numbers count parsed
-  data records, not physical text lines.
-- Missing means an empty/whitespace value. Values such as `N/A` remain literal
-  text unless the operator explicitly handles them before the run.
-- Label checks are exact and case-sensitive. Decimal fields must be finite;
-  integer fields use integer syntax. Optional blank numeric values are permitted
-  unless that field is declared required.
-- Duplicate matching uses `duplicate_keys` or all columns, exactly as stored.
-- Cleaning order: trim configured columns, apply explicit mappings, reject
-  invalid records, then keep the first remaining record for each duplicate key.
+1. Inspect a CSV and validate it against an operator-supplied rules file.
+2. Check duplicates and read the supplied cleaning policy.
+3. Save findings, input hashes and a continuation plan in the four handoff files.
+4. In a fresh session, read the handoff and verify the source, rules and policy hashes.
+5. Call `create_clean_copy` with those hashes and an unused output name.
+6. Independently validate the cleaned result and confirm that the raw source is unchanged.
 
-`fixtures/rules/` contains the complete example schemas. Operators prepare rules
-and policy before agent access; agents cannot rewrite them to make a report pass.
+Task memory lives in `handoff/PROJECT_STATE.md`, `PLAN_LOG.md`, `CHECKPOINTS.md`
+and `DECISIONS.md` within the workspace. The fixture files provide a starting point.
 
-`create_clean_copy` accepts a `request` object with dataset/rule/policy paths,
-their current SHA-256 hashes, and a unique output name. It writes an atomic run
-folder containing `cleaned.csv`, `excluded.json` and `report.json`. The report
-includes source hashes, counts, corrections and post-clean validation. An empty
-but structurally valid output can pass the declared rules, so always inspect
-record counts; passing checks does not establish model suitability or truth.
+Cleaning creates a new folder containing `cleaned.csv`, `excluded.json` and
+`report.json`. It trims configured fields, applies explicit mappings, excludes
+invalid records and retains the first valid record for each duplicate key.
+It never overwrites an existing output run or changes the original dataset.
 
-## Shared memory and demo
+CSV input is bounded to 5 MiB, 10,000 records and 100 columns. Quoted commas and
+embedded newlines are supported. Inspection returns at most five sample rows.
+Passing validation establishes compliance with the declared rules, rather than
+factual correctness or suitability for training a model.
 
-Read `docs/DEMO.md`. Both sessions communicate through:
+## Process management and HTTPS
 
-- `handoff/PROJECT_STATE.md`
-- `handoff/PLAN_LOG.md`
-- `handoff/CHECKPOINTS.md`
-- `handoff/DECISIONS.md`
-
-The second session receives the project location and continuation objective,
-then discovers its task from these files. No conversational findings from the
-first agent are passed to it. `evidence/` distinguishes real agent transcripts
-from scripted protocol checks.
-
-## Process management and HTTPS deployment
-
-Install process-management tools:
+Install PM2 and obtain the Cloudflare `cloudflared` executable, then run:
 
 ```powershell
-npm install -g pm2 @modelcontextprotocol/inspector
-```
-
-Obtain the Windows `cloudflared` executable from Cloudflare's official releases.
-Start locally under supervision:
-
-```powershell
-.\scripts\Start-DataWais.ps1
-```
-
-After approving public exposure, start an HTTPS quick tunnel:
-
-```powershell
+npm install -g pm2
 .\scripts\Start-DataWais.ps1 -CloudflaredExe 'C:\path\cloudflared.exe'
 ```
 
-The script saves the public URL in `.runtime/public-url.txt`, configures the
-server's exact allowed hostname and restarts it. Authentication remains required.
-Quick tunnels are temporary and can change URL when restarted. A stable
-presentation deployment should use an operator-owned named tunnel or static
-domain. Keep the host awake; pm2 restarts processes, not a powered-off computer.
-On the original computer a limited-privilege sign-in task starts the launcher.
-On another Windows computer run `scripts/Install-Autostart.ps1` after configuring
-the runtime. This is a user sign-in task, not a system service.
+PM2 supervises the server and tunnel. The current public endpoint is saved in
+`.runtime/public-url.txt`. Authentication remains required. Quick-tunnel addresses
+can change after restart; the tunnel wrapper updates the server hostname allowlist
+and private connection settings. The host computer must remain awake and online.
+
+`scripts/Install-Autostart.ps1` installs current-user sign-in startup.
+`DISABLE-AUTOSTART.cmd` disables it.
+
+## Tests
 
 ```powershell
-$env:PM2_HOME = Join-Path $PWD '.runtime\pm2'
-pm2 status
-pm2 logs datawais-server --lines 20
-.\scripts\Stop-DataWais.ps1
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe scripts\check_http.py
 ```
 
-The user authorized Cloudflare deployment and the public endpoint passed the
-protocol checks. See `evidence/STATUS.md` for its current address and the local
-router DNS limitation. The managed tunnel wrapper refreshes private connection
-files and the server's exact host allowlist if Cloudflare assigns another URL.
+The tests cover filesystem restrictions, roles, hash guards, CSV processing,
+credentials and tunnel configuration. The HTTP check requires a running server.
 
 ## Security boundaries
 
-Only the operator may modify the workspace through the operating system. The
-sandbox rejects parent traversal, absolute/UNC/drive paths, alternate streams,
-hidden names, reserved device names, symlinks, junctions and reparse points.
-The workspace must not be writable by untrusted local accounts: path checks are
-not an OS sandbox against a hostile local process racing directory replacement.
-One managed server process shares a lock across roles. Do not run multiple
-independent writers against the same root.
+Paths must stay within the workspace. The server rejects traversal, absolute and
+UNC paths, hidden names, reserved device names, alternate streams, symlinks,
+junctions and reparse points. Generic writes are limited to permitted text folders.
+Raw data and operator rules are protected from agent writes. Updates require
+current hashes; deletion also requires admin scope and explicit confirmation.
 
-Tokens are prototype credentials, not a full OAuth deployment. Use HTTPS for
-remote access and a compatible client that supports bearer headers. Store token
-files with account-restricted permissions and rotate them before sharing.
-The endpoint checks hosts/origins, limits request sizes and has no command
-execution tools. Dataset text is always untrusted data; host-side instruction
-handling remains part of the security boundary.
-
-## References
-
-- [Official MCP Python SDK, v1 API](https://py.sdk.modelcontextprotocol.io/v1/)
-- [Official OpenAI MCP configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference)
-- [MCP filesystem reference server](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem)
-- [MCP Inspector](https://github.com/modelcontextprotocol/inspector)
-- [Cloudflare quick tunnels](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
-- [pm2 documentation](https://pm2.keymetrics.io/docs/usage/quick-start/)
+Use HTTPS for remote access. Tokens are prototype credentials rather than a full
+OAuth deployment. The implementation assumes a trusted local machine owner and
+a single writer process. Dataset text is treated as data, never as instructions.

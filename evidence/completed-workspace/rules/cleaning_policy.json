@@ -1,6 +1,0 @@
-{
-  "trim_columns": ["question", "label"],
-  "label_mappings": {"label": {"paymnt": "payment"}},
-  "deduplicate": true,
-  "exclude_invalid": true
-}

@@ -1,7 +1,3 @@
 * text=auto eol=lf
 *.csv text eol=lf
 *.ps1 text eol=lf
-*.pdf binary
-*.png binary
-evidence/2026-10-17-user-demo/workspace/** -text
-*.docx binary

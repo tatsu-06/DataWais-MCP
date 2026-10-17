@@ -1,9 +1,0 @@
-{
-  "automatic_recovery": true,
-  "old_pid": 12888,
-  "recovered_pid": 8420,
-  "pm2_status": "online",
-  "restart_count": 1,
-  "handoff_persisted": true,
-  "public_tunnel_started": false
-}
