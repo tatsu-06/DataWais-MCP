@@ -8,6 +8,10 @@ Upload-ready coursework report: [DataWais PT1 Submission](docs/DataWais-PT1-Subm
 The repository is public for instructor access. The report and transcript links
 can be opened without signing in.
 
+For your own screenshots, double-click `DOCUMENTATION.cmd` on the configured
+computer and follow [the screenshot guide](docs/SCREENSHOT-GUIDE.md). Its views
+show real MCP results and clearly label saved session evidence.
+
 **On the original computer, read [START-HERE.md](START-HERE.md): setup, HTTPS,
 Codex registration and sign-in startup have been completed.**
 
