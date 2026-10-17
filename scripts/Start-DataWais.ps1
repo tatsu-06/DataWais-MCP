@@ -44,6 +44,15 @@ foreach ($name in @('datawais-server','datawais-tunnel')) {
   }
   if ($LASTEXITCODE -ne 0) { throw "Could not start $name" }
 }
+$localReady = $false
+for ($attempt = 0; $attempt -lt 12; $attempt++) {
+  try {
+    $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8765/healthz' -TimeoutSec 2
+    if ($health.status -eq 'ok' -and $health.service -eq 'DataWais MCP') { $localReady = $true; break }
+  } catch { }
+  Start-Sleep -Milliseconds 500
+}
+if (-not $localReady) { throw 'The DataWais server did not pass its local health check. Inspect .runtime/server.err.log.' }
 if ($CloudflaredExe) {
   $ready = $false
   for ($attempt = 0; $attempt -lt 30; $attempt++) {

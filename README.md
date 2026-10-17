@@ -12,6 +12,11 @@ For your own screenshots, double-click `DOCUMENTATION.cmd` on the configured
 computer and follow [the screenshot guide](docs/SCREENSHOT-GUIDE.md). Its views
 show real MCP results and clearly label saved session evidence.
 
+`START-DATAWAIS.cmd` keeps its window open after startup. A successful start
+prints `STARTUP COMPLETE`; the server continues running after that window closes.
+Startup failures remain visible and are saved in the ignored private file
+`.runtime/last-startup.log`. Downloaded source copies need README setup before use.
+
 **On the original computer, read [START-HERE.md](START-HERE.md): setup, HTTPS,
 Codex registration and sign-in startup have been completed.**
 

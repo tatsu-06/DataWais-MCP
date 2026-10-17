@@ -4,6 +4,8 @@
 
 1. Open the project folder on the original computer.
 2. Double-click START-DATAWAIS.cmd and allow the service check to finish.
+   Its window stays open so you can read the success message or any error.
+   After success, closing that window does not stop the background services.
 3. Double-click DOCUMENTATION.cmd. This opens a menu of real results for screenshots.
 4. Choose a menu number and use Windows + Shift + S to capture the relevant area.
 5. Save screenshots in order and add a short explanation beneath each in Word or Google Docs.
