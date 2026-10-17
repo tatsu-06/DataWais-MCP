@@ -24,7 +24,7 @@ are synthetic demonstration data.
 | Deliverable | Status |
 |---|---|
 | Working repository | Complete locally, with Git history and a portable bundle |
-| Repository link | Created at https://github.com/tatsu-06/DataWais-MCP; currently private pending public-visibility approval |
+| Repository link | Complete and public at https://github.com/tatsu-06/DataWais-MCP; anonymous access verified |
 | README | Written, with installation, tools, deployment and security guidance |
 | Tool-call transcript | Complete: agent-1-transcript.jsonl and agent-2-transcript.jsonl |
 | Short report | Complete: docs/REPORT.md |
@@ -62,7 +62,7 @@ are synthetic demonstration data.
 
 ## Remaining actions
 
-1. Enable instructor access to the hosted repository and submit its link.
+1. Paste the public hosted repository link into the submission form.
    The one-file upload report is docs/DataWais-PT1-Submission.pdf and includes the
    architecture, security discussion, test results and condensed actual transcript.
 2. Rehearse the actual workflow within five minutes and present it at the

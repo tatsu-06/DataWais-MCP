@@ -5,8 +5,8 @@
 Repository: https://github.com/tatsu-06/DataWais-MCP
 
 Upload-ready coursework report: [DataWais PT1 Submission](docs/DataWais-PT1-Submission.pdf).
-Repository visibility is currently private; instructor access must be enabled
-before using the link for grading.
+The repository is public for instructor access. The report and transcript links
+can be opened without signing in.
 
 **On the original computer, read [START-HERE.md](START-HERE.md): setup, HTTPS,
 Codex registration and sign-in startup have been completed.**

@@ -34,7 +34,7 @@ This file records actual verification, not intended features.
   zero duplicates. Raw data SHA-256 is unchanged.
 - Read DEMONSTRATION.md, the full JSONL transcripts and completed-workspace/ for
   the reproducible evidence. HTTP checks are clearly labeled as scripted tests.
-- Hosted repository: https://github.com/tatsu-06/DataWais-MCP (private pending
-  explicit public-visibility approval). Instructor access must be enabled.
+- Hosted repository: https://github.com/tatsu-06/DataWais-MCP (public after explicit
+  user approval). Anonymous access to the repository and PDF report is verified.
 - A seven-page upload report is included at docs/DataWais-PT1-Submission.pdf.
   The team still needs to perform its assessed five-minute presentation.
