@@ -19,3 +19,4 @@ node_modules/
 /scripts/configure_codex.py
 /scripts/Get-DataWaisHeaders.ps1
 /src/datawais/documentation.py
+~$*
